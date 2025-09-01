@@ -12,3 +12,4 @@ C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\ref
 C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.pdb
 C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.genruntimeconfig.cache
 C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\ref\Poker_Backend.dll
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.sourcelink.json
