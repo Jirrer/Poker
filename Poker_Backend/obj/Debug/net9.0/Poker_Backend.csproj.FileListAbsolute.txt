@@ -1,0 +1,14 @@
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\bin\Debug\net9.0\Poker_Backend.exe
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\bin\Debug\net9.0\Poker_Backend.deps.json
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\bin\Debug\net9.0\Poker_Backend.runtimeconfig.json
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\bin\Debug\net9.0\Poker_Backend.dll
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\bin\Debug\net9.0\Poker_Backend.pdb
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.AssemblyInfoInputs.cache
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.AssemblyInfo.cs
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.csproj.CoreCompileInputs.cache
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.dll
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\refint\Poker_Backend.dll
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.pdb
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\Poker_Backend.genruntimeconfig.cache
+C:\Users\jrirr\OneDrive\open_projects\Poker-1\Poker_Backend\obj\Debug\net9.0\ref\Poker_Backend.dll
