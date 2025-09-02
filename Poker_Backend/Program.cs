@@ -1,13 +1,14 @@
 ﻿namespace Poker;
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 static class Program
 {
     private static Random random = new Random();
     private static HashSet<string> NPCNames = new HashSet<string>();
     private static List<Card> deck = new List<Card>();
-    private static NPC[] npcs = new NPC[5];
+    private static List<NPC> npcs = new List<NPC>();
     private static int smallBlind = 15;
     private static int bigBlind = 30;
 
@@ -68,15 +69,16 @@ static class Program
 
     private static void createNpcs()
     {
-        for (int npcIndex = 0; npcIndex < npcs.Length; npcIndex++)
+        for (int npcIndex = 0; npcIndex < 5; npcIndex++) // still 5 NPCs
         {
             int randomIndex = random.Next(NPCNames.Count);
             string randomName = new List<string>(NPCNames)[randomIndex];
 
-            npcs[npcIndex] = new NPC(randomName, pullFromTheDeck(), pullFromTheDeck());
+            npcs.Add(new NPC(randomName, pullFromTheDeck(), pullFromTheDeck(), 10000));
             NPCNames.Remove(randomName);
         }
     }
+
 
     private static Card pullFromTheDeck()
     {
@@ -96,24 +98,33 @@ static class Program
 
     static void preFlop()
     {
+        setBlinds();
+
         int toPlay = 30;
-        
+
         while (true)
         {
-            for (int index = 0; index < npcs.Length; index++)
+            for (int index = 2; index < npcs.Count; index++)
             {
-                if (index == npcs.Length - 2) { npcs[index].bet = smallBlind; }
-                else if (index == npcs.Length - 1) { npcs[index].bet = bigBlind; }
-
-                npcs[index].placeBet();
+                npcs[index].placeBet(toPlay);
+                
+                npcs.RemoveAll(npc => npc.bet < 0);
 
                 if (npcs[index].bet > toPlay) { toPlay = npcs[index].bet; }
             }
+            
+            
 
 
 
         }
 
+    }
+
+    static void setBlinds()
+    {
+        npcs[0].bet = smallBlind;
+        npcs[1].bet = bigBlind;
     }
 
     static void flop()
