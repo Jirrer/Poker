@@ -29,7 +29,7 @@ static class Program
         string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
         List<Card> newDeck = new List<Card>();
 
-        for (int value = 1; value <= 13; value++) // 1-13 for card values
+        for (int value = 2; value <= 14; value++) // 1-13 for card values
         {
             foreach (string suit in suits)
             {
@@ -95,9 +95,9 @@ static class Program
     static void runGame()
     {
         preFlop();
-        flop();
-        turn();
-        river();
+        // flop();
+        // turn();
+        // river();
     }
 
     static void preFlop()
@@ -163,7 +163,7 @@ static class Program
     {
         while (true)
         {
-            Console.WriteLine($"Pot Size - {potSize}");
+            Console.WriteLine($"Pot Size - {potSize}\n");
 
 
             foreach (NPC npc in npcs)
