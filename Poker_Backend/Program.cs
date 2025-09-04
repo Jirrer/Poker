@@ -1,7 +1,8 @@
 ﻿namespace Poker;
 
 using System;
-using System.ComponentModel.DataAnnotations;
+
+// To-Do: make ai work
 
 static class Program
 {
@@ -9,6 +10,8 @@ static class Program
     private static HashSet<string> NPCNames = new HashSet<string>();
     private static List<Card> deck = new List<Card>();
     private static List<NPC> npcs = new List<NPC>();
+    private static Card[] board = new Card[5];
+    private static int potSize = 0;
     private static int smallBlind = 15;
     private static int bigBlind = 30;
 
@@ -98,26 +101,9 @@ static class Program
 
     static void preFlop()
     {
+        Console.WriteLine("Pre-Flop");
         setBlinds();
-
-        int toPlay = 30;
-
-        while (true)
-        {
-            for (int index = 2; index < npcs.Count; index++)
-            {
-                npcs[index].placeBet(toPlay);
-                
-                npcs.RemoveAll(npc => npc.bet < 0);
-
-                if (npcs[index].bet > toPlay) { toPlay = npcs[index].bet; }
-            }
-            
-            
-
-
-
-        }
+        playRound(30);
 
     }
 
@@ -125,20 +111,71 @@ static class Program
     {
         npcs[0].bet = smallBlind;
         npcs[1].bet = bigBlind;
+
+        potSize = smallBlind + bigBlind;
     }
 
     static void flop()
     {
+        Console.WriteLine("Flop");
+        board[0] = pullFromTheDeck();
+        board[1] = pullFromTheDeck();
+        board[2] = pullFromTheDeck();
 
+        playRound(0);
     }
 
     static void turn()
     {
+        Console.WriteLine("Turn");
+        board[3] = pullFromTheDeck();
+
+        playRound(0);
 
     }
 
     static void river()
     {
+        Console.WriteLine("River");
+        board[4] = pullFromTheDeck();
 
+        playRound(0);
+
+    }
+
+    static void playRound(int toPlay)
+    {
+        while (true)
+        {
+            Console.WriteLine($"Pot Size - {potSize}");
+
+
+            foreach (NPC npc in npcs)
+            {
+                npc.placeBet(toPlay, board, potSize);
+
+                if (npc.bet > toPlay) { toPlay = npc.bet; }
+
+                if (npc.bet >= 0) { potSize += npc.bet; Console.WriteLine($"{npc.name} bet {npc.bet}"); }
+                else { Console.WriteLine($"{npc.name} Folded"); }
+
+                if (npc.bet > 0) { npc.money -= npc.bet; }
+
+            }
+
+            bool continueRound = false;
+
+            foreach (NPC npc in npcs)
+            {
+                if (npc.bet > 0 && npc.bet < toPlay) { continueRound = true; }
+            }
+
+            if (!continueRound) { break; }
+
+            foreach (NPC npc in npcs)
+            {
+                if (npc.bet >= 0) { npc.bet = 0; }
+            }
+        }
     }
 }
