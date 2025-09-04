@@ -23,7 +23,6 @@ public class NPC
 
     public void placeBet(int toPlay, Card[] board, int potSize)
     {
-        if (toPlay == 0) { toPlay = 1; }
 
         if (board.Count(x => x != null) == 0) { this.betPreFlop(toPlay, this.getPotOdds(toPlay, potSize), potSize); return; }
 
@@ -95,12 +94,6 @@ public class NPC
         this.call(toCall);
         int raiseAmount = (int)(potOdds * potSize);
         this.bet += raiseAmount;
-        Console.WriteLine($"{this.name} raises to {this.bet}");
-    }
-
-    private void check()
-    {
-        return;
     }
 
     private void fold()

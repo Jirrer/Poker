@@ -15,10 +15,12 @@ static class Program
     private static int potSize = 0;
     private static int smallBlind = 15;
     private static int bigBlind = 30;
+    private static int numberOfNpcs = 5;
 
     static void Main()
     {
         createDeck();
+        shuffleDeck();
         populateNpcNames();
         createNpcs();
         runGame();
@@ -27,53 +29,35 @@ static class Program
     private static void createDeck()
     {
         string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-        List<Card> newDeck = new List<Card>();
 
-        for (int value = 2; value <= 14; value++) // 1-13 for card values
+        for (int value = 2; value <= 14; value++)
         {
-            foreach (string suit in suits)
-            {
-                newDeck.Add(new Card(value, suit));
-            }
+            foreach (string suit in suits) { deck.Add(new Card(value, suit)); }
         }
-
-        deck = shuffleDeck(newDeck);
     }
 
-    private static List<Card> shuffleDeck(List<Card> deckInput)
+    private static void shuffleDeck()
     {
-        for (int i = deckInput.Count - 1; i > 0; i--)
+        for (int i = deck.Count - 1; i > 0; i--)
         {
             int j = random.Next(i + 1);
-            Card temp = deckInput[i];
-            deckInput[i] = deckInput[j];
-            deckInput[j] = temp;
+            Card temp = deck[i];
+            deck[i] = deck[j];
+            deck[j] = temp;
         }
-
-        return deckInput;
     }
 
     private static void populateNpcNames()
     {
         string filePath = @"NPC_Names.txt";
 
-        try
-        {
-            foreach (string line in File.ReadLines(filePath))
-            {
-                NPCNames.Add(line);
-            }
-        }
-
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error: {e.Message}");
-        }
+        try { foreach (string line in File.ReadLines(filePath)) { NPCNames.Add(line); } }
+        catch (Exception e) { Console.WriteLine($"Error: {e.Message}"); }
     }
 
     private static void createNpcs()
     {
-        for (int npcIndex = 0; npcIndex < 5; npcIndex++) // still 5 NPCs
+        for (int npcIndex = 0; npcIndex < numberOfNpcs; npcIndex++)
         {
             int randomIndex = random.Next(NPCNames.Count);
             string randomName = new List<string>(NPCNames)[randomIndex];
@@ -101,12 +85,20 @@ static class Program
     }
 
     static void preFlop()
-    { 
+    {
         Console.WriteLine("Pre-Flop");
         setBlinds();
         swapTableOrder();
-        playRound(30);
+        playNextRound(30);
 
+    }
+
+    static void setBlinds()
+    {
+        npcs[0].bet = smallBlind;
+        npcs[1].bet = bigBlind;
+
+        potSize = smallBlind + bigBlind;
     }
 
     static void swapTableOrder()
@@ -119,16 +111,9 @@ static class Program
 
         npcs[npcs.Count - 2] = tempSmallBlind;
         npcs[npcs.Count - 1] = tempBigBlind;
-        
+
     }
 
-    static void setBlinds()
-    {
-        npcs[0].bet = smallBlind;
-        npcs[1].bet = bigBlind;
-
-        potSize = smallBlind + bigBlind;
-    }
 
     static void flop()
     {
@@ -138,7 +123,7 @@ static class Program
         board[1] = pullFromTheDeck();
         board[2] = pullFromTheDeck();
 
-        playRound(0);
+        playNextRound(0);
     }
 
     static void turn()
@@ -146,7 +131,7 @@ static class Program
         Console.WriteLine("Turn");
         board[3] = pullFromTheDeck();
 
-        playRound(0);
+        playNextRound(0);
 
     }
 
@@ -155,17 +140,16 @@ static class Program
         Console.WriteLine("River");
         board[4] = pullFromTheDeck();
 
-        playRound(0);
+        playNextRound(0);
 
     }
 
-    static void playRound(int toPlay)
+    static void playNextRound(int toPlay)
     {
         while (true)
         {
             Console.WriteLine("Went Around");
             Console.WriteLine($"Pot Size - {potSize}\n");
-
 
             foreach (NPC npc in npcs)
             {
@@ -181,7 +165,6 @@ static class Program
             }
 
             bool continueRound = false;
-
             foreach (NPC npc in npcs)
             {
                 if (npc.bet > 0 && npc.bet < toPlay && npc.money > 0) { continueRound = true; }
@@ -189,10 +172,6 @@ static class Program
 
             if (!continueRound) { break; }
 
-            foreach (NPC npc in npcs)
-            {
-                if (npc.bet >= 0) { npc.bet = 0; }
-            }
         }
     }
 }
