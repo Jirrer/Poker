@@ -40,20 +40,40 @@ public class NPC
 
     private void betPreFlop(int toCall, double potOdds, int potSize)
     {
-
         int handValue = PreFlopValue.getPreflopValue(this.card1, this.card2);
-        Console.Write($"{handValue}  - ");
+        Random rng = new Random();
+        double roll = rng.NextDouble();
 
-        if (handValue <= 10) { this.raise(potOdds, toCall, potSize); }
-        else if (handValue <= 30) { this.call(toCall); }
-        else if (handValue <= 45 && this.bet >= (int)0.5 * toCall) { this.call(toCall); }
-        else if (this.bet == toCall) { this.check(); }
-        else { this.fold(); }
+        if (handValue <= 10)  
+        {
+            if (roll < 0.7) this.raise(potOdds, toCall, potSize);  
+            else this.call(toCall);  
+        }
+        else if (handValue <= 25)  
+        {
+            if (roll < 0.3) this.raise(potOdds, toCall, potSize);  
+            else this.call(toCall);
+        }
+        else if (handValue <= 40)  
+        {
+            if (potOdds < 0.25 && roll < 0.5) this.call(toCall);  
+            else this.fold();
+        }
+
+        else if (this.bet == toCall)
+        {
+            return;
+        }
+        else 
+        {
+            if (roll < 0.1) this.call(toCall); 
+            else this.fold();
+        }
     }
-    
+
     private double getPotOdds(int toPlay, int potSize)
     {
-        return toPlay / (potSize + toPlay);
+        return (double)toPlay / (potSize + toPlay);
     }
 
     private double getHandEquity(Card[] board) {
@@ -72,8 +92,10 @@ public class NPC
 
     private void raise(double potOdds, int toCall, int potSize)
     {
-        Console.WriteLine("test");
-        this.bet = (int)(toCall + Math.Round(potOdds * potSize));
+        this.call(toCall);
+        int raiseAmount = (int)(potOdds * potSize);
+        this.bet += raiseAmount;
+        Console.WriteLine($"{this.name} raises to {this.bet}");
     }
 
     private void check()

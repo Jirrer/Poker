@@ -163,6 +163,7 @@ static class Program
     {
         while (true)
         {
+            Console.WriteLine("Went Around");
             Console.WriteLine($"Pot Size - {potSize}\n");
 
 
@@ -183,7 +184,7 @@ static class Program
 
             foreach (NPC npc in npcs)
             {
-                if (npc.bet > 0 && npc.bet < toPlay) { continueRound = true; }
+                if (npc.bet > 0 && npc.bet < toPlay && npc.money > 0) { continueRound = true; }
             }
 
             if (!continueRound) { break; }
