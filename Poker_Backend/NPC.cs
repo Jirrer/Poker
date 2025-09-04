@@ -19,16 +19,14 @@ public class NPC
         this.money = money;
     }
 
-    public void placeBet(int toCall, Card[] board, int potSize)
+    public void placeBet(int toPlay, Card[] board, int potSize)
     {
-        int toPlay = toCall;
-
         if (toPlay == 0) { toPlay = 1; }
 
         double potOdds = this.getPotOdds(toPlay, potSize);
         double handEquity = this.getHandEquity(board);
 
-        // if (handEquity < potOdds && toPlay > 0) { this.fold(); }
+        if (handEquity < potOdds && this.bet < toPlay) { this.fold(); }
         // else if (handEquity >= 2 * potOdds) { this.raise(potOdds); }
         // else { this.call(toPlay); }
 

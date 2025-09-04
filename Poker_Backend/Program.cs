@@ -1,6 +1,7 @@
 ﻿namespace Poker;
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 // To-Do: make ai work
 
@@ -100,11 +101,25 @@ static class Program
     }
 
     static void preFlop()
-    {
+    { 
         Console.WriteLine("Pre-Flop");
         setBlinds();
+        swapTableOrder();
         playRound(30);
 
+    }
+
+    static void swapTableOrder()
+    {
+        NPC tempSmallBlind = npcs[0];
+        NPC tempBigBlind = npcs[1];
+
+        npcs[0] = npcs[npcs.Count - 2];
+        npcs[1] = npcs[npcs.Count - 1];
+
+        npcs[npcs.Count - 2] = tempSmallBlind;
+        npcs[npcs.Count - 1] = tempBigBlind;
+        
     }
 
     static void setBlinds()
@@ -118,6 +133,7 @@ static class Program
     static void flop()
     {
         Console.WriteLine("Flop");
+        swapTableOrder();
         board[0] = pullFromTheDeck();
         board[1] = pullFromTheDeck();
         board[2] = pullFromTheDeck();
